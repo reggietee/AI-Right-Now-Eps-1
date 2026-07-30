@@ -1,0 +1,747 @@
+/* Per-kind scene styling. Display: Bricolage Grotesque (titles, figures,
+   headings). Text/data: Familjen Grotesk (labels, body, sources). Accent:
+   verdigris. Content-heavy scenes read left-aligned/editorial; titles,
+   dividers, statements and statistics stay centered. Body text >= 28px. */
+
+.scene__content { overflow: hidden; }
+
+/* Content-heavy scenes read as editorial, left-aligned compositions rather than
+   dead-centered blocks. Titles, dividers, statements and the big statistics stay
+   centered (they are single statements and earn the symmetry). */
+.scene__content[data-kind='grid'],
+.scene__content[data-kind='numbered'],
+.scene__content[data-kind='features'],
+.scene__content[data-kind='moves'],
+.scene__content[data-kind='timeline'],
+.scene__content[data-kind='brief'],
+.scene__content[data-kind='compare'],
+.scene__content[data-kind='proof'],
+.scene__content[data-kind='tool'],
+.scene__content[data-kind='calls'],
+.scene__content[data-kind='categories'] {
+  align-items: stretch;
+  justify-content: center;
+  text-align: left;
+  padding: 58px 104px;
+  gap: var(--space-lg);
+}
+
+/* Editorial heading: kicker-style accent tick under left-aligned scene titles. */
+.scene__content[data-kind] .scene-h {
+  position: relative;
+  margin-bottom: var(--space-xs);
+  padding-bottom: var(--space-md);
+}
+.scene__content[data-kind='grid'] .scene-h::after,
+.scene__content[data-kind='numbered'] .scene-h::after,
+.scene__content[data-kind='features'] .scene-h::after,
+.scene__content[data-kind='moves'] .scene-h::after,
+.scene__content[data-kind='timeline'] .scene-h::after,
+.scene__content[data-kind='compare'] .scene-h::after,
+.scene__content[data-kind='calls'] .scene-h::after,
+.scene__content[data-kind='categories'] .scene-h::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 96px;
+  height: 3px;
+  background: var(--accent);
+}
+
+.cap {
+  font-family: 'Familjen Grotesk', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.25;
+  color: var(--cream);
+  opacity: 0.82;
+  margin-top: 30px;
+  max-width: 90%;
+}
+
+.scene-h {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 58px;
+  line-height: 1.02;
+  color: var(--gold);
+  margin-bottom: 34px;
+}
+
+.foot {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--cream);
+  opacity: 0.55;
+  margin-top: 20px;
+  max-width: 60%;
+}
+
+.chev { opacity: 0.8; margin-bottom: 8px; }
+
+/* --- Title / finale -------------------------------------------------------- */
+.title { display: flex; flex-direction: column; align-items: center; gap: 26px; }
+.title__main {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 158px;
+  line-height: 0.96;
+  letter-spacing: 0.01em;
+  color: var(--gold);
+  display: flex;
+  flex-direction: column;
+}
+.title__ep {
+  font-family: 'Familjen Grotesk', system-ui, sans-serif;
+  font-size: 52px;
+  color: var(--cream);
+}
+.sub {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.55;
+}
+
+/* --- Divider --------------------------------------------------------------- */
+.divider { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.divider__num {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: 0.5em;
+  color: var(--gold);
+  opacity: 0.7;
+}
+.divider__word {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 150px;
+  line-height: 1;
+  color: var(--gold);
+  text-align: center;
+}
+
+/* --- Statistic ------------------------------------------------------------- */
+.stat { display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.stat__fig {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 800;
+  line-height: 0.9;
+  color: var(--gold);
+}
+.stat__label {
+  font-family: 'Familjen Grotesk', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 1.2;
+  color: var(--cream);
+  max-width: 82%;
+}
+.stat__src {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.6;
+  margin-top: 10px;
+}
+
+/* --- Statement / versus / instruction ------------------------------------- */
+.statement { display: flex; flex-direction: column; align-items: center; gap: 26px; }
+.statement__t {
+  font-family: 'Familjen Grotesk', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 92px;
+  line-height: 1.08;
+  color: var(--cream);
+  max-width: 92%;
+}
+.statement__sub {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.6;
+}
+.versus { display: flex; flex-direction: column; align-items: center; gap: 30px; }
+.versus p {
+  font-family: 'Familjen Grotesk', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 78px;
+  color: var(--cream);
+}
+.versus__rule { width: 120px; height: 1px; background: var(--gold); opacity: 0.6; }
+
+.instruction { display: flex; flex-direction: column; align-items: center; gap: 34px; }
+.instruction__t {
+  font-family: 'Familjen Grotesk', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 88px;
+  line-height: 1.12;
+  color: var(--gold);
+  max-width: 95%;
+}
+.instruction__sub {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.7;
+}
+.kchar { display: inline-block; will-change: transform, opacity; }
+
+/* --- Lists: grid / numbered / features / moves / cats --------------------- */
+.grid, .numbered, .features, .moves, .cats { list-style: none; width: 100%; }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg) var(--space-3xl);
+}
+.grid li {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 33px;
+  color: var(--cream);
+  line-height: 1.25;
+  padding-left: 34px;
+  position: relative;
+}
+/* leading gold diamond marker — no side-stripe */
+.grid li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.6em;
+  width: 11px;
+  height: 11px;
+  background: var(--gold);
+  transform: translateY(-50%) rotate(45deg);
+}
+.numbered, .moves { display: flex; flex-direction: column; gap: var(--space-sm); align-items: stretch; }
+.numbered li, .moves li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-lg);
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  color: var(--cream);
+}
+.moves li { font-size: 38px; }
+.n {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 34px;
+  color: var(--accent);
+  min-width: 46px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.features { display: flex; flex-direction: column; gap: var(--space-md); }
+.features li {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 62px;
+  color: var(--cream);
+  line-height: 1.02;
+}
+.cats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg) var(--space-2xl); }
+.cats li {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 84px;
+  color: var(--gold);
+  line-height: 1;
+}
+
+/* --- Tool detail ----------------------------------------------------------- */
+.tool { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-xl); }
+.tool__cat {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 120px;
+  line-height: 0.95;
+  color: var(--gold);
+}
+.tool__body {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 42px;
+  line-height: 1.4;
+  color: var(--cream);
+  max-width: 22ch;
+}
+
+/* --- Timeline -------------------------------------------------------------- */
+.timeline { display: flex; gap: 30px; width: 100%; }
+.timeline li {
+  flex: 1;
+  border-top: 2px solid rgba(201, 168, 76, 0.6);
+  padding-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+.tl__when {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.tl__what {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 1.28;
+  color: var(--cream);
+}
+
+/* --- Pricing (interactive) ------------------------------------------------- */
+.pricing { display: flex; flex-direction: column; gap: 16px; width: max-content; margin: 0 auto; }
+.tier { display: grid; grid-template-columns: 240px 300px 260px; align-items: baseline; gap: 24px; }
+.tier--head span {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.45;
+  text-align: right;
+}
+.tier__n {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 62px;
+  color: var(--gold);
+  text-align: left;
+}
+.tier__rate {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  color: var(--cream);
+  opacity: 0.7;
+  text-align: right;
+}
+.tier__cost {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 52px;
+  color: var(--accent);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.pslider { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 36px; width: 760px; }
+.pslider__input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: var(--gold-faint);
+  outline: none;
+  cursor: pointer;
+}
+.pslider__input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 10px;
+}
+.pslider__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid var(--navy);
+  cursor: pointer;
+}
+.pslider__input::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 3px solid var(--navy);
+  cursor: pointer;
+}
+.pslider__val {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 30px;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+}
+.pslider__val .pvol { color: var(--gold); font-weight: 400; }
+.pslider__val em { font-style: normal; font-size: 22px; opacity: 0.5; letter-spacing: 0.1em; }
+.unit {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  color: var(--cream);
+  opacity: 0.65;
+  margin-top: 24px;
+}
+
+/* --- Brief ----------------------------------------------------------------- */
+.brief { display: flex; gap: 28px; width: 100%; }
+.brief__b {
+  flex: 1;
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  background: rgba(201, 168, 76, 0.04);
+}
+.brief__b p {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 1.12;
+  color: var(--cream);
+  text-align: left;
+}
+
+/* --- Compare --------------------------------------------------------------- */
+.compare { display: flex; flex-direction: column; gap: 18px; }
+.compare p {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1.3;
+  color: var(--cream);
+}
+.compare__st { font-size: 58px; margin-top: 36px; }
+
+/* --- Proof ----------------------------------------------------------------- */
+.proof { display: flex; gap: 46px; align-items: center; width: 100%; }
+.proof__side { display: flex; flex-direction: column; gap: 26px; flex: 1; text-align: left; }
+.proof__side .cap { margin: 0; }
+.skillgrid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px 22px; }
+.skillgrid span {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  opacity: 0.75;
+}
+
+/* --- Mockups (screenshot placeholders) ------------------------------------ */
+.mock {
+  flex: 1;
+  min-width: 420px;
+  border: 1px solid rgba(201, 168, 76, 0.55);
+  background: rgba(6, 10, 20, 0.9);
+  padding: 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+}
+.mock--tall { min-height: 380px; }
+.mock__bar { display: flex; gap: 10px; padding: 16px 18px; border-bottom: 1px solid rgba(201, 168, 76, 0.3); }
+.mock__bar i { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(201, 168, 76, 0.6); }
+.mock__body { display: flex; flex-direction: column; gap: 14px; padding: 6px 22px; }
+.mock__body span { height: 14px; background: rgba(245, 240, 232, 0.14); border-radius: 2px; }
+.mock__tag {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.7;
+  padding: 6px 22px 0;
+}
+
+/* --- Connect button -------------------------------------------------------- */
+.btnscene { display: flex; flex-direction: column; align-items: center; gap: 50px; }
+.connect {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 64px;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  background: transparent;
+  border: 2px solid var(--gold);
+  border-radius: 14px;
+  padding: 34px 80px;
+  display: inline-flex;
+  align-items: center;
+  gap: 30px;
+  cursor: default;
+}
+.connect__plug {
+  width: 46px; height: 46px;
+  border: 3px solid var(--gold);
+  border-radius: 10px;
+  position: relative;
+}
+.connect__plug::before, .connect__plug::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  width: 3px; height: 12px;
+  background: var(--gold);
+}
+.connect__plug::before { left: 13px; }
+.connect__plug::after { right: 13px; }
+
+/* --- MCP hub --------------------------------------------------------------- */
+.hubwrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; width: 100%; height: 100%; }
+.hub { flex: 0 0 auto; width: 100%; height: 500px; }
+.hub circle { stroke-width: calc(var(--k, 1) * 1.5px); }
+.hub-ray { stroke: var(--gold); fill: none; stroke-opacity: 0.4; transition: stroke-opacity 0.25s ease; }
+.hub-node { cursor: default; transition: opacity 0.25s ease; }
+.hub.hovering .hub-ray { stroke-opacity: 0.08; }
+.hub.hovering .hub-ray.active { stroke-opacity: 1; }
+.hub.hovering .hub-node { opacity: 0.28; }
+.hub.hovering .hub-node.active { opacity: 1; }
+.hub-core { fill: var(--deep); stroke: var(--gold); }
+/* the core quietly breathes so the hub feels alive */
+@media (prefers-reduced-motion: no-preference) {
+  body:not(.reduced) .hub-core { animation: hub-breathe 3.4s ease-in-out infinite; }
+}
+@keyframes hub-breathe {
+  0%, 100% { stroke-opacity: 0.65; }
+  50% { stroke-opacity: 1; }
+}
+.hub-core__t {
+  fill: var(--gold);
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  text-anchor: middle;
+}
+.hub-node__disc { fill: rgba(6, 10, 20, 0.95); stroke: var(--gold); }
+.hub-node__t {
+  fill: var(--cream);
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 21px;
+  text-anchor: middle;
+}
+
+/* --- Demo / pipeline ------------------------------------------------------- */
+.demo { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+.demo__line {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  color: var(--cream);
+  opacity: 0.85;
+}
+.demo .mock { width: 78%; flex: none; }
+.pipe { display: flex; align-items: center; justify-content: center; gap: 26px; margin-bottom: 30px; }
+.pipe .stage {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 46px;
+  color: var(--gold);
+}
+.pipe .arrow { font-size: 40px; color: var(--cream); opacity: 0.6; }
+.pipe__shots { display: flex; gap: 34px; width: 100%; }
+.pipe__time {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 72px;
+  color: var(--cream);
+  margin-top: 30px;
+}
+.pipe__time em {
+  font-style: normal;
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* --- Redeem / recap (QR) --------------------------------------------------- */
+.redeem { display: flex; align-items: center; gap: 60px; width: 100%; justify-content: center; }
+.qr { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+.qr__code { width: 300px; height: 300px; }
+.qr__code svg { width: 100%; height: 100%; display: block; }
+.qr__label {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.75;
+}
+.redeem__tiers { list-style: none; display: flex; flex-direction: column; gap: 34px; text-align: left; }
+.redeem__tiers li { display: flex; flex-direction: column; gap: 6px; }
+.redeem__tiers .who {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.redeem__tiers .offer {
+  font-family: 'Familjen Grotesk', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 46px;
+  color: var(--cream);
+}
+.redeem__tiers .val {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  color: var(--cream);
+  opacity: 0.6;
+}
+.recap { display: flex; justify-content: center; }
+.recap .qr__code { width: 360px; height: 360px; }
+
+/* --- Demo image slot (real screenshot, mockup fallback) ------------------- */
+.shot { position: relative; width: 84%; margin: 0 auto; }
+.shot__img { width: 100%; height: auto; display: block; border: 1px solid var(--gold-line); border-radius: 4px; }
+.shot .mock { display: none; }
+.shot--fallback .shot__img { display: none; }
+.shot--fallback .mock { display: flex; width: 100%; }
+
+/* pipeline: the "after" shot sparkles vs the before */
+.pipe__shot { position: relative; flex: 1; display: flex; }
+.pipe__shot .mock { flex: 1; min-width: 0; }
+.pipe__shot--after { border-radius: 6px; }
+@media (prefers-reduced-motion: no-preference) {
+  body:not(.reduced) .pipe__shot--after { animation: shot-glow 2.6s ease-in-out infinite; }
+}
+@keyframes shot-glow {
+  0%, 100% { box-shadow: 0 0 26px oklch(0.75 0.1 91 / 0.18); }
+  50% { box-shadow: 0 0 54px oklch(0.75 0.1 91 / 0.4); }
+}
+.pipe__shot--after::before, .pipe__shot--after::after {
+  content: '\2726'; position: absolute; color: var(--gold);
+  text-shadow: 0 0 12px oklch(0.75 0.1 91 / 0.6);
+}
+.pipe__shot--after::before { top: -18px; right: -10px; font-size: 34px; }
+.pipe__shot--after::after { bottom: -14px; left: -8px; font-size: 22px; opacity: 0.85; }
+
+/* --- Redeem: Scan to Play -------------------------------------------------- */
+.redeem { display: flex; align-items: center; gap: 76px; justify-content: center; width: 100%; }
+.redeem__text { flex: 1; text-align: left; display: flex; flex-direction: column; gap: var(--space-lg); }
+.redeem__body {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1.35;
+  color: var(--cream);
+  opacity: 0.85;
+  max-width: 20ch;
+}
+
+/* --- Predictions (numbered calls) ----------------------------------------- */
+.calls { list-style: none; display: flex; flex-direction: column; gap: 16px; width: 100%; }
+.calls li { display: flex; gap: 26px; align-items: baseline; }
+.call__n {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--accent);
+  min-width: 46px;
+  font-variant-numeric: tabular-nums;
+}
+.call__body { display: flex; flex-direction: column; gap: 2px; }
+.call__t {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 34px;
+  color: var(--cream);
+  line-height: 1.08;
+}
+.call__d {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 26px;
+  color: var(--cream);
+  opacity: 0.72;
+  line-height: 1.22;
+}
+
+/* categories: three across */
+.cats--3 { grid-template-columns: repeat(3, 1fr); gap: var(--space-lg) var(--space-xl); }
+.cats--3 li { font-size: 70px; }
+
+/* --- Statement / button headings ------------------------------------------ */
+.statement__h,
+.btnscene__h {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 44px;
+  color: var(--gold);
+  margin-bottom: var(--space-sm);
+}
+.btnscene { gap: 40px; }
+
+/* --- ChatGPT pricing: compact chart --------------------------------------- */
+.scene__content[data-kind='pricing'] { gap: var(--space-sm); }
+.scene__content[data-kind='pricing'] .scene-h { margin-bottom: var(--space-xs); font-size: 54px; }
+.pricing { gap: var(--space-sm); }
+.pricing .tier { grid-template-columns: 200px 250px 220px; gap: 20px; }
+.pricing .tier__n { font-size: 46px; }
+.pricing .tier__rate { font-size: 32px; }
+.pricing .tier__cost { font-size: 42px; }
+.pslider { width: 620px; margin-top: 18px; gap: 10px; }
+.unit { margin-top: var(--space-md); }
+
+/* --- Outro (Questions + contact) ------------------------------------------ */
+.outro { display: flex; align-items: center; gap: 64px; width: 100%; }
+.outro__left { flex: 0 0 auto; }
+.outro__q {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 104px;
+  line-height: 0.94;
+  color: var(--gold);
+}
+.outro__right { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-lg); }
+.outro__name {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 52px;
+  color: var(--cream);
+  margin-bottom: var(--space-xs);
+}
+.outro__contacts { list-style: none; display: flex; flex-direction: column; gap: var(--space-md); }
+.outro__contacts li { display: flex; align-items: baseline; gap: 20px; }
+.contact__label {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  min-width: 128px;
+}
+.contact__value {
+  font-family: 'Familjen Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 34px;
+  color: var(--cream);
+}

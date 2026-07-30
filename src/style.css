@@ -1,0 +1,269 @@
+:root {
+  /* OKLCH palette. Neutrals are tinted toward the brand navy hue (~264) so
+     surfaces and accent feel of a piece; nothing is pure black or white. */
+  --navy: oklch(0.16 0.03 264);      /* canvas background */
+  --deep: oklch(0.12 0.028 264);     /* depth layer */
+  --panel: oklch(0.155 0.032 264);   /* opaque scene surface (no ray bleed) */
+  --gold: oklch(0.75 0.1 91);        /* brass — rules, key figures (~#c9a84c) */
+  --cream: oklch(0.95 0.012 86);     /* warm off-white body text */
+  --accent: oklch(0.66 0.085 178);   /* verdigris — oxidized-brass patina */
+
+  --gold-line: oklch(0.75 0.1 91 / 0.5);
+  --gold-faint: oklch(0.75 0.1 91 / 0.2);
+
+  /* 4pt spacing scale, semantic names */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--navy);
+  color: var(--cream);
+  overflow: hidden;
+  font-family: 'Familjen Grotesk', system-ui, -apple-system, sans-serif;
+}
+
+#viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+#world {
+  position: absolute;
+  inset: 0;
+}
+
+/* Three parallax layers; the camera transforms each at its own pan rate. */
+.layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.layer--bg,
+.layer--fg {
+  pointer-events: none;
+}
+
+/* Gold stroke width stays ~constant on screen: base --sw px counter-scaled by
+   --k (= 1 / camera scale), set on #world every frame by the camera. */
+#world svg path {
+  stroke-width: calc(var(--sw, 1.4) * var(--k, 1) * 1px);
+}
+
+/* --- Scene box ------------------------------------------------------------- */
+.scene {
+  position: absolute;
+  width: 1280px;
+  height: 800px;
+  transform: translate(-50%, -50%);
+}
+
+/* Panel + frame + content only materialize for the active (zoomed-in) scene;
+   otherwise the scene reads as a single constellation node. */
+.scene__panel {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 30% 20%, oklch(0.75 0.1 91 / 0.05), transparent 55%),
+    var(--panel);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.scene__frame {
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.scene.is-active .scene__panel,
+.scene.is-active .scene__frame { opacity: 1; }
+
+.scene__content {
+  position: absolute;
+  inset: 0;
+  visibility: hidden; /* GSAP reveals only the active scene's content */
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 60px;
+  text-align: center;
+}
+
+/* --- Constellation node (the zoomed-out point of interest) --------------- */
+.scene__node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* counter-scale with the camera so the marker holds a constant screen size */
+  transform: translate(-50%, -50%) scale(var(--k, 1));
+  transform-origin: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  opacity: 1;
+  transition: opacity 0.45s ease, transform 0.2s ease;
+}
+.scene.is-active .scene__node { opacity: 0; }
+.node__mark { width: 30px; height: 30px; display: block; }
+.node__star { fill: var(--gold); opacity: 0.85; }
+.node__dot { fill: var(--cream); }
+.node__label {
+  font-family: 'Familjen Grotesk', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 19px;
+  letter-spacing: 0.01em;
+  color: var(--cream);
+  opacity: 0.75;
+  white-space: nowrap;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+/* Only the 7 segment anchors are labelled at rest; content-scene labels reveal
+   on hover so the star field stays uncluttered. */
+.scene:not(.scene--anchor) .node__label { opacity: 0; }
+/* dividers are the bright anchor-stars of the constellation */
+.scene--anchor .node__mark { width: 48px; height: 48px; }
+.scene--anchor .node__star { fill: var(--accent); opacity: 1; }
+.scene--anchor .node__dot { fill: var(--gold); }
+.scene--anchor .node__label {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.95;
+}
+body.reduced .scene__panel,
+body.reduced .scene__frame,
+body.reduced .scene__node { transition: none; }
+
+.scene__title {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 200px;
+  line-height: 0.98;
+  color: var(--gold);
+}
+
+.scene__sub {
+  font-family: 'Familjen Grotesk', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.scene__id {
+  opacity: 0.32;
+  font-size: 22px;
+}
+
+/* --- Persistent UI ------------------------------------------------------- */
+#segName {
+  position: fixed;
+  top: 24px;
+  left: 28px;
+  font-size: 18px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  opacity: 0.35;
+  z-index: 10;
+}
+
+#counter {
+  position: fixed;
+  bottom: 24px;
+  right: 28px;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  opacity: 0.35;
+  z-index: 10;
+}
+
+#hint {
+  position: fixed;
+  top: 24px;
+  right: 28px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-align: right;
+  opacity: 0.28;
+  z-index: 10;
+}
+
+/* --- Speaker notes ------------------------------------------------------- */
+#notes {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 38vh;
+  overflow: auto;
+  padding: 24px 32px 28px;
+  background: rgba(6, 10, 20, 0.96);
+  border-top: 1px solid var(--gold);
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 20;
+}
+
+#notes.open {
+  transform: translateY(0);
+}
+
+#notes h3 {
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  color: var(--gold);
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+#notes p {
+  font-size: 20px;
+  line-height: 1.5;
+  opacity: 0.85;
+  max-width: 70ch;
+}
+
+/* --- Overview mode ------------------------------------------------------- */
+body.overview .scene {
+  cursor: pointer;
+}
+body.overview .scene:hover .scene__node {
+  transform: translate(-50%, -50%) scale(calc(var(--k, 1) * 1.14));
+}
+body.overview .scene:hover .node__label {
+  color: var(--gold);
+  opacity: 1;
+}
+body.overview .scene:hover .node__star {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #notes {
+    transition: none;
+  }
+}
