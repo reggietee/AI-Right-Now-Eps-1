@@ -109,7 +109,7 @@ body {
   text-align: center;
 }
 
-/* --- Constellation node (the zoomed-out point of interest) --------------- */
+/* --- Constellation node — a small refined dot at the zoomed-out scale ----- */
 .scene__node {
   position: absolute;
   top: 50%;
@@ -120,43 +120,77 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
   opacity: 1;
   transition: opacity 0.45s ease, transform 0.2s ease;
 }
 .scene.is-active .scene__node { opacity: 0; }
-.node__mark { width: 30px; height: 30px; display: block; }
-.node__star { fill: var(--gold); opacity: 0.85; }
-.node__dot { fill: var(--cream); }
+.node__mark {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.85;
+}
 .node__label {
   font-family: 'Familjen Grotesk', system-ui, sans-serif;
-  font-weight: 500;
-  font-size: 19px;
-  letter-spacing: 0.01em;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.06em;
   color: var(--cream);
-  opacity: 0.75;
+  opacity: 0.7;
   white-space: nowrap;
   transition: opacity 0.25s ease, color 0.25s ease;
 }
-/* Only the 7 segment anchors are labelled at rest; content-scene labels reveal
-   on hover so the star field stays uncluttered. */
+/* Only the 7 segment anchors are labelled at rest; content labels reveal on hover. */
 .scene:not(.scene--anchor) .node__label { opacity: 0; }
-/* dividers are the bright anchor-stars of the constellation */
-.scene--anchor .node__mark { width: 48px; height: 48px; }
-.scene--anchor .node__star { fill: var(--accent); opacity: 1; }
-.scene--anchor .node__dot { fill: var(--gold); }
+/* anchors: a small accent dot ringed by a thin circle */
+.scene--anchor .node__mark { width: 7px; height: 7px; background: var(--accent); opacity: 1; }
+.scene--anchor .node__mark::before {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  opacity: 0.55;
+}
 .scene--anchor .node__label {
-  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 22px;
-  letter-spacing: 0.04em;
+  font-family: 'Familjen Grotesk', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
-  opacity: 0.95;
+  opacity: 0.8;
 }
+/* the MCP hub sits under the HAVEN wordmark — hide its node in overview */
+body.overview .scene--core .scene__node { opacity: 0; }
+
+/* HAVEN — the constellation's centre title (canvas origin, constant size) */
+.constellation-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -50%) scale(var(--k, 1));
+  transform-origin: center;
+  font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 60px;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  color: var(--gold);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+body.overview .constellation-title { opacity: 1; }
+
 body.reduced .scene__panel,
 body.reduced .scene__frame,
-body.reduced .scene__node { transition: none; }
+body.reduced .scene__node,
+body.reduced .constellation-title { transition: none; }
 
 .scene__title {
   font-family: 'Bricolage Grotesque', system-ui, sans-serif;
@@ -258,8 +292,9 @@ body.overview .scene:hover .node__label {
   color: var(--gold);
   opacity: 1;
 }
-body.overview .scene:hover .node__star {
+body.overview .scene:hover .node__mark {
   opacity: 1;
+  background: var(--gold);
 }
 
 @media (prefers-reduced-motion: reduce) {

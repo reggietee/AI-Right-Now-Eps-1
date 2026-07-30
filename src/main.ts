@@ -49,21 +49,13 @@ const sceneFrame = svg({
   content: zigguratFrame({ x: 18, y: 18, w: 1244, h: 764, steps: 2, inset: 26, opacity: 0.5, draw: false }),
 });
 
-// The constellation node: how a scene reads when zoomed out — a point of
-// interest (a sparkle star) with a label, instead of a boring boxed screenshot.
-// It counter-scales with the camera (transform: scale(var(--k))) so it holds a
-// constant, readable size at every zoom. The full panel/frame/content only
-// materialize when a scene becomes active (see .is-active in CSS).
-const nodeStar = svg({
-  viewBox: '-50 -50 100 100',
-  className: 'node__glyph',
-  style: 'width:100%; height:100%; overflow:visible',
-  content:
-    '<path class="node__star" d="M0,-46 C6,-14 14,-6 46,0 C14,6 6,14 0,46 C-6,14 -14,6 -46,0 C-14,-6 -6,-14 0,-46 Z"/>' +
-    '<circle class="node__dot" r="7"/>',
-});
+// The constellation node: how a scene reads when zoomed out — a small refined
+// dot (a point of interest) with a label, instead of a boxed screenshot. It
+// counter-scales with the camera (transform: scale(var(--k))) so it holds a
+// constant size at every zoom. The full panel/frame/content only materialize
+// when a scene becomes active (see .is-active in CSS).
 const sceneNode = (label: string) =>
-  `<div class="scene__node"><span class="node__mark">${nodeStar}</span>` +
+  `<div class="scene__node"><span class="node__mark"></span>` +
   `<span class="node__label">${label}</span></div>`;
 
 // Only titles and dividers hold their segment's dramatic tilt; every content
@@ -84,8 +76,10 @@ scenes.forEach((s, i) => {
   el.style.top = `${s.y}px`;
   el.dataset.index = String(i);
   const content = CONTENT[s.id];
-  // Dividers are the "bright stars" (segment anchors) of the constellation.
+  // Dividers are the anchor-stars of the constellation; the MCP hub sits at the
+  // exact center where the HAVEN wordmark goes, so its node hides in overview.
   if (content?.kind === 'divider') el.classList.add('scene--anchor');
+  if (s.id === 'S25') el.classList.add('scene--core');
   el.innerHTML =
     `<div class="scene__panel"></div>` +
     sceneFrame +
@@ -99,6 +93,13 @@ scenes.forEach((s, i) => {
   layerContent.appendChild(el);
   sceneEls.push(el);
 });
+
+// HAVEN — the constellation's centre title (canvas origin, constant size,
+// visible only in the zoomed-out overview).
+const havenTitle = document.createElement('div');
+havenTitle.className = 'constellation-title';
+havenTitle.textContent = 'HAVEN';
+layerContent.appendChild(havenTitle);
 
 // --- Interactive moments ----------------------------------------------------
 hydratePricing();
@@ -176,7 +177,7 @@ function enterOverview(): void {
   inOverview = true;
   document.body.classList.add('overview');
   deactivate();       // nothing is active in the constellation
-  segName.textContent = 'Overview';
+  segName.textContent = ''; // HAVEN is the title in this view
   counter.textContent = `${scenes.length} scenes`;
   camera.cut(overviewCamera(scenes, window.innerWidth, window.innerHeight));
 }
